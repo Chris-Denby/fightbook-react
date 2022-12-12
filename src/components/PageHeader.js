@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 const PageHeader = (props) => {
     return(
         <View style={styles.container}>
-            {/* <Text style={styles.text}>{props.pageName}</Text> */}
+            <Text style={styles.text}>{props.pageName}</Text>
         </View>
     )
 }
@@ -12,13 +12,15 @@ const PageHeader = (props) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        justifyContent: 'center',
         backgroundColor: 'red',
         width: '100%',
         height: 100,
+        flexDirection: 'row',
+        paddingTop: 50,
+        paddingLeft: 20,
     },
     text: {
-        fontSize: 18,
+        fontSize: 28,
         fontWeight: "bold",
     },
 });

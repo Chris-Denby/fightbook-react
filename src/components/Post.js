@@ -7,13 +7,12 @@ const Post = (props) => {
         <View style={styles.postHeader}>
             <Image source={require('../../images/10.png')} style={styles.avatar} />
             <View style={styles.container_text}>
-                <Text style={styles.title}>{props.item.username}</Text>
-                <Text style={styles.description}>{props.item.text}</Text>
-                <Text style={styles.date}>{props.item.date}</Text>
+                <Text>bla</Text>
+                <Text style={styles.title}>{props.item.eventText}</Text>
             </View>
         </View>
         <Image source={'../../images/'+props.item.id+'.png'} style={styles.photo} />
-        <PostSummaryBar/>
+        {/* <PostSummaryBar/> */}
         <ButtonBar item={props.item}/>
     </View>
     )
@@ -22,9 +21,13 @@ const Post = (props) => {
 const ButtonBar = (props) => {
     return (
         <View style={styles.buttonBar}>
-            <LikeButton numLikes={props.item.numLikes} liked={props.liked}/>
+            <LikeButton numLikes={props.item.likesCount} liked={props.liked} onPress={onLikePress}/>
         </View>
     )
+}
+
+const onLikePress = () => {
+    alert("Click")
 }
 
 const PostSummaryBar = () => {

@@ -2,41 +2,45 @@ import {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import PageHeader from "../components/PageHeader"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword } from "firebase/auth"
-import { getDatabase } from 'firebase/database'
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
+import { getDatabase, ref, set } from 'firebase/database'
+import { initializeApp } from '@firebase/app';
+import { firebaseConfig } from '../firebase/firebaseConfig';
+import { useSetRecoilState } from 'recoil';
+import { currentUserState } from '../states/CurrentUserState';
 
 export default function RegisterScreen({navigation}) {
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const auth = getAuth()
-    const database = getDatabase()
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase();
+    const setUserRecoilState = useSetRecoilState(currentUserState);
 
     const onRegisterPress = () => {
-        
-        //TO DO: When the register button is pressed
         if(password !== confirmPassword) {
             alert("Passwords must match")
             return
         }
-        //create user in firebase
+        //create user in firebase auth
         createUserWithEmailAndPassword(auth,email,password)
         .then((userCredential)=> {
-            const user = userCredential.user
-            //store user data in firestore
-            // const usersRef = firebase.firestore().collection('users')
-            // usersRef.doc(uid)
-            // .set(data)
-            // .then(()=>{
+                //do when promise is returned
+                const user = {
+                    uid: userCredential.user.uid,
+                    email: email,
+                    name: fullName,
+                }
+                //set the usermrecoil state
+                setUserRecoilState(user);
+                // store user data in firestore 
+                set(ref(database, 'Users/' + user.uid), user);
                 //once user created - navigate to home screen
                 //with payload of user data to home screen
-                navigation.navigate('Home',{
-                    userId: user.uid,
-                    email: user.email
-                })
-            // })
-        }).catch((error)=> {
+                navigation.navigate('Home')
+            }).catch((error)=> {
             alert(error)
         })
     }

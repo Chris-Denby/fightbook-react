@@ -1,45 +1,42 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import PageHeader from "../components/PageHeader"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { currentUserState } from '../states/CurrentUserState'
+import { firebaseConfig } from '../firebase/firebaseConfig';
+import { initializeApp } from '@firebase/app';
+import { useSetRecoilState } from 'recoil';
 
 export default function SignInScreen({navigation}) {
-    const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const setUserRecoilState = useSetRecoilState(currentUserState);
 
     const onSignInPress = () => {
+        // signInWithEmailAndPassword(auth, "tehownerort00l@gmail.com", "111111")
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential)=>{
-            //signed in
-            const user = userCredential.user
-            navigation.navigate('Home',{
-                userId: user.uid,
-                email: user.email
+            const user = {
+                uid: userCredential.user.uid,
+                email: userCredential.user.email,
+                name: userCredential.user.displayName,
+            }
+            //set the usermrecoil state
+            setUserRecoilState(user);
+            navigation.navigate('Home');
             })
-        }).catch((error)=>{
+        .catch((error)=>{
             alert(error)
-        })
-    }
+        });
+    };
 
     const onRegisterFooterPress = () => {
         //TO DO: When the login link is pressed
         navigation.navigate('Register')
-    }
-
-    const auth = getAuth()
-    onAuthStateChanged(auth, (user)=> {
-        if(user) {
-            // User is signed in, see docs for a list of available properties
-            // https://firebase.google.com/docs/reference/js/firebase.User
-            const uid = user.uid
-        }
-        else {
-            //user is signed out
-        }
-    })
+    };
 
     const styles = StyleSheet.create({
         container: {
@@ -97,7 +94,7 @@ export default function SignInScreen({navigation}) {
         }
     });
 
-    return(
+    return( 
         <View style={styles.container}>
             <PageHeader pageName='Sign In'/>
             <KeyboardAwareScrollView style= {{flex:1, width:'100%'}} keyboardShouldPersistTaps="always">
@@ -121,7 +118,7 @@ export default function SignInScreen({navigation}) {
                 <TouchableOpacity style={styles.button} onPress={onSignInPress}>
                         <Text style={styles.buttonTitle}>Sign in</Text>
                 </TouchableOpacity>
-                <View  styles={styles.footerView}>
+                <View styles={styles.footerView}>
                     <Text styles={styles.footerText} 
                     onPress={onRegisterFooterPress}>
                         Dont have an account? Sign up here

@@ -1,8 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import {View, FlatList, StyleSheet, Text, SafeAreaView} from 'react-native'
 import Post from './Post.js'
-import { checkIfLiked } from '../utils/LikedChecker';
-
 
 const ActivityFeed = ({itemList}) => {
     return(
@@ -11,9 +9,7 @@ const ActivityFeed = ({itemList}) => {
             contentContainerStyle={{alignItems: "stretch"}}
             data={itemList} 
             renderItem={({item}) =>
-        <Post 
-        item={item}
-        liked={checkIfLiked(item.id)}/>
+        <Post item={item}/>
     }/>
     </View>
     )   

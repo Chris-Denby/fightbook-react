@@ -1,7 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
 import {View, FlatList, StyleSheet, Text, Button, Image} from 'react-native'
-import { checkIfLiked } from '../utils/LikedChecker';
-
 
 const NotificationList = ({itemList}) => {
     return(
@@ -12,7 +10,8 @@ const NotificationList = ({itemList}) => {
             renderItem={({item}) =>
         <Notification 
         item={item}
-        liked={checkIfLiked(item.id)}/>
+        // liked={checkIfLiked(item.id)}
+        />
     }/>
     </View>
     )   

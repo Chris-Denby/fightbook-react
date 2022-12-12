@@ -1,7 +1,7 @@
-import { View } from "react-native-web";
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 
-export default function ProfileScreen(route, navigation){
+export default function ProfileScreen(route){
     const { userId, email } = route.params
     const currentUserId = 0;
 
