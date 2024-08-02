@@ -6,7 +6,7 @@ import { default as RegisterScreen } from './src/screens/RegisterScreen';
 import { default as SignInScreen } from './src/screens/SignInScreen';
 import { default as ProfileScreen } from './src/screens/ProfileScreen/ProfileScreen'
 import { RecoilRoot } from 'recoil'; 
-import { Text } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { useEffect } from 'react';
 
   //https://reactnavigation.org/docs/material-bottom-tab-navigator
@@ -17,7 +17,12 @@ export default function App() {
   return (
     <RecoilRoot>
       <NavigationContainer>
-          <Tab.Navigator initialRouteName="Register" backBehavior='history'>
+          <Tab.Navigator screenOptions={{
+              tabBarStyle: { 
+                position: 'absolute',
+                backgroundColor: '#000000'
+               }
+            }} initialRouteName="Register" backBehavior='history'>
           {/* <Tab.Screen name="Profile" component={ProfileScreen}/> */}
           <Tab.Screen name="Home" component={HomeScreen}/>
           <Tab.Screen name="Events" component={NotificationsScreen}/>

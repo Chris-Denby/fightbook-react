@@ -8,6 +8,7 @@ import { currentUserState } from '../states/CurrentUserState';
 import { activityFeedState } from '../states/ActivityFeedState'
 import { AuthCredential, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 import { useFocusEffect } from '@react-navigation/native';
+import PostCreator from '../components/PostCreator';
 
 export default function HomeScreen({navigation}) {
 
@@ -62,6 +63,7 @@ export default function HomeScreen({navigation}) {
     return(
         <View style={styles.container}>
             <PageHeader pageName='Activity'/>
+            <PostCreator/>
             <ActivityFeed itemList={postsArray}/>
         </View>
     )
@@ -69,9 +71,7 @@ export default function HomeScreen({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#4c4c4c',
-      // alignItems: 'center',
-      // justifyContent: 'center',
+    //   backgroundColor: '#4c4c4c',
+      width: "100%"
     }
   });

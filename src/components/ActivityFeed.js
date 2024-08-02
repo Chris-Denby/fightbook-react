@@ -20,7 +20,6 @@ const ActivityFeed = ({itemList}) => {
 //     return( postId > 0 ? true : false )
 // }
 
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,

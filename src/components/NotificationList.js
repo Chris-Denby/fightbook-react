@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import {View, FlatList, StyleSheet, Text, Button, Image} from 'react-native'
+import ActionButton from './ActionButton';
 
 const NotificationList = ({itemList}) => {
     return(
@@ -36,10 +37,9 @@ const Notification = (props) => {
 const ButtonBar = (id) => {
     return(
         <View>
-            <Button
-            style={notificationStyles.button}
-            onPress={acceptChallenge({id})}
-            title='Accept'/>
+            <ActionButton
+            onClickHandler={acceptChallenge({id})}
+            label="Accept"/>
         </View>
     )
 }
@@ -62,16 +62,6 @@ const notificationStyles = StyleSheet.create({
         elevation: 2,
         backgroundColor: '#ffffff',
         // width: "100%"
-    },
-    button: {
-        padding: 10,
-        marginLeft:0,
-        marginRight:0,
-        marginTop: 10,
-        marginBottom: 0,
-        borderRadius: 25,
-        backgroundColor: 'blue',
-        fontSize: 8,
     },
     postHeader: {
         flex: 1,

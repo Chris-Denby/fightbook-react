@@ -47,7 +47,7 @@ export default function RegisterScreen({navigation}) {
 
     const onSignInFooterPress = () => {
         //TO DO: When the login link is pressed
-        navigation.navigate('SignIn')
+        navigation.navigate("Sign In")
     }
 
     const styles = StyleSheet.create({
